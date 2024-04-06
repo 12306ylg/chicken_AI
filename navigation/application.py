@@ -27,42 +27,42 @@ def CSL(search_citation):
 
 
 def application_page():
-    user_input = st.text_area("Enter your subject here:", height=200,
-                              placeholder=' Impact of Artificial Intelligence on the Evolution of Medical Technologies')
+    user_input = st.text_area("在此处输入您的主题：", height=200,
+                              placeholder='人工智能对医疗技术演进的影响')
     if user_input:
         button = False
     else:
         button = True
 
-    bibliography_file = st.file_uploader("Upload Bibliography References (CSV from ZOTERO ONLY)", type=["csv"],
-                                         help="Zotero only ! Open Zotero, right click on your folder, export as .csv ")
+    bibliography_file = st.file_uploader("上传参考书目（仅限 ZOTERO 的 CSV）", type=["csv"],
+                                         help="只能用Zotero！打开Zotero，右键单击您的文件夹，导出为.csv")
     if not bibliography_file:
         bibliography_file = None
 
-    st.subheader("Generation Options")
+    st.subheader("生成选项")
 
     tab1, tab2, tab3 = st.columns(3, gap='large')
 
     with tab1:
-        max_figures = st.slider("Number of figures", min_value=0, max_value=10, value=3)
+        max_figures = st.slider("数字数", min_value=0, max_value=10, value=3)
 
-        max_words = st.slider("Number of words", min_value=1000, max_value=10000, value=2000, step=250)
+        max_words = st.slider("字数", min_value=1000, max_value=10000, value=2000, step=250)
 
     with tab3:
-        include_plots = st.checkbox("Include Plots")
+        include_plots = st.checkbox("包含绘图")
         if include_plots:
             plot = True
         else:
             plot = False
 
-        include_equations = st.checkbox("Include Equations")
+        include_equations = st.checkbox("包含公式")
         if include_equations:
             equation = True
         else:
             equation = False
 
-        generation_mode = st.radio("Generation Mode", ["Strict", "Creative"],
-                                   help='Strict: fit all your requests\n\nCreative: more freedom')
+        generation_mode = st.radio("生成模式", ["严格", "创造"],
+                                   help='严格：满足您的所有要求\n\n创造：更自由')
 
     with tab2:
         writing_styles = [
@@ -81,14 +81,14 @@ def application_page():
             "Poetic"
         ]
 
-        writing_style = st.selectbox("Writing Style", writing_styles, help='Default Scientific')
+        writing_style = st.selectbox("写作风格", writing_styles, help='默认 Scientific')
 
-        citation_style = st_searchbox(CSL, key="Citation Style", label='Citation Style (default: Cell Research)')
+        citation_style = st_searchbox(CSL, key="引文样式", label='引文样式（默认：Cell Research）')
         if not citation_style:
             citation_style = 'Cell Research'
 
-    if st.button("Hatch the Text 🐣", use_container_width=True, disabled=button):
-        with st.status("Hatching... 🐣", expanded=True) as status:
+    if st.button("孵化文本 🐣", use_container_width=True, disabled=button):
+        with st.status("孵化中... 🐣", expanded=True) as status:
             incubator = []
 
             understanding = chickenAI(user_input, biblio=bibliography_file).understanding_chicken()
@@ -127,8 +127,8 @@ def application_page():
 
             golden_chicken = chickenAI.hatching(incubator)
 
-            status.update(label="HATCHING ! 🐔", state="complete", expanded=False)
+            status.update(label="孵化了 ! 🐔", state="complete", expanded=False)
 
-        st.link_button("Download your ChickenAI generation 🐔", golden_chicken)
+        st.link_button("下载你的 ChickenAI 生成 🐔", golden_chicken)
 
         st.balloons()
