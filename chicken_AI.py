@@ -102,7 +102,8 @@ if 'popup_closed' not in st.session_state:
 
 if not st.session_state.popup_closed:
     with modal.container():
-        st.markdown(
+        
+        st.expander("欢迎").markdown(
             'Welcome to ChickenAI, where innovation meets feathers. By accessing and using this site, you agree to the following terms:')
         st.markdown('')
         st.markdown('<strong>Content Integrity</strong>: The information provided on'
